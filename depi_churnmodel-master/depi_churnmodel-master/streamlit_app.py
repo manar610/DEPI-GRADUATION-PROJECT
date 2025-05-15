@@ -3,13 +3,14 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 from catboost import CatBoostClassifier
 
 st.set_page_config(layout="wide")
 
 model = CatBoostClassifier()
-model.load_model("catboost_model.cbm")
-print("Model loaded successfully!")
+model_path = os.path.join(os.path.dirname(__file__), "catboost_model.cbm")
+model.load_model(model_path)
 
 # Load dataset for visualizations
 data = pd.read_csv("cleaned_data.csv")
