@@ -55,16 +55,18 @@ input_data = {
 
 # Create DataFrame and reorder columns
 df_input = pd.DataFrame([input_data])[column_order]
+with right_col:
+    st.header("📈 Prediction Output")
 
 # Predict
-if st.button("Predict Churn"):
-    prediction = model.predict(df_input)[0]
-    prob = model.predict_proba(df_input)[0][1]
+    if st.button("Predict Churn"):
+        prediction = model.predict(df_input)[0]
+        prob = model.predict_proba(df_input)[0][1]
     
-    if prediction == 1:
-        st.error(f"⚠️ Likely to Churn (Confidence: {prob:.2%})")
-    else:
-        st.success(f"✅ Unlikely to Churn (Confidence: {1 - prob:.2%})")
+        if prediction == 1:
+            st.error(f"⚠️ Likely to Churn (Confidence: {prob:.2%})")
+        else:
+            st.success(f"✅ Unlikely to Churn (Confidence: {1 - prob:.2%})")
 
     # Monthly Charges KDE (alternative: Salary)
     st.subheader("📊 Churned vs. Retained - Estimated Salary")
