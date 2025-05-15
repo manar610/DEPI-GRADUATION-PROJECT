@@ -22,39 +22,46 @@ st.title("Customer Churn Prediction")
 left_col, right_col = st.columns([1, 2])
 with left_col:
     st.header("🔧 Input Features")
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([1, 1])
     with col1:
-        credit_score = st.slider("Credit Score", 300, 850, 600)
+        credit_score = st.slider("Credit Score", 300, 900, 600)
         geography = st.selectbox("Geography", ["France", "Germany", "Spain"])
         gender = st.selectbox("Gender", ["Male", "Female"])
         age = st.slider("Age", 18, 100, 30)
         tenure = st.slider("Tenure (Years)", 0, 10, 3)
     with col2:
-        balance = st.number_input("Balance", min_value=0.0, value=0.0)
-        num_of_products = st.slider("Number of Products", 1, 4, 1)
-        has_cr_card = st.selectbox("Has Credit Card?", ["Yes", "No"])
-        is_active_member = st.selectbox("Is Active Member?", ["Yes", "No"])
-        estimated_salary = st.number_input("Estimated Salary", min_value=0.0, value=50000.0)
+        balance = st.number_input("Balance", min_value=0.0)
+        num_products = st.slider("Number of Products", 1, 4, 1)
+        has_cr_card = st.selectbox("Has Credit Card", ["Yes", "No"])
+        is_active = st.selectbox("Is Active Member", ["Yes", "No"])
+        salary = st.number_input("Estimated Salary", min_value=0.0)
 
-column_order = ['CreditScore', 'Age', 'Tenure', 'Balance', 'NumOfProducts', 
-                'HasCrCard', 'IsActiveMember', 'EstimatedSalary', 'Geography', 'Gender']
+trained_feature_order = [
+    'CreditScore', 'Age', 'Tenure', 'Balance','NumOfProducts', 
+    'HasCrCard', 'IsActiveMember', 'EstimatedSalary','Geography_France', 'Geography_Germany', 'Geography_Spain',
+    'Gender_Female', 'Gender_Male'
+]
 
 # Create input dict with encoded values
 input_data = {
-    "CreditScore": credit_score,
-    "Geography": {"France": 0, "Germany": 1, "Spain": 2}[geography],
-    "Gender": 1 if gender == "Male" else 0,
-    "Age": age,
-    "Tenure": tenure,
-    "Balance": balance,
-    "NumOfProducts": num_of_products,
-    "HasCrCard": 1 if has_cr_card == "Yes" else 0,
-    "IsActiveMember": 1 if is_active_member == "Yes" else 0,
-    "EstimatedSalary": estimated_salary
+    'CreditScore': credit_score,
+    'Geography_France': 1 if geography == "France" else 0,
+    'Geography_Germany': 1 if geography == "Germany" else 0,
+    'Geography_Spain': 1 if geography == "Spain" else 0,
+    'Gender_Female': 1 if gender == "Female" else 0,
+    'Gender_Male': 1 if gender == "Male" else 0,
+    'Age': age,
+    'Tenure': tenure,
+    'Balance': balance,
+    'NumOfProducts': num_products,
+    'HasCrCard': 1 if has_cr_card == "Yes" else 0,
+    'IsActiveMember': 1 if is_active == "Yes" else 0,
+    'EstimatedSalary': salary
 }
 
 # Create DataFrame and reorder columns
-df_input = pd.DataFrame([input_data])[column_order]
+df_input = pd.DataFrame([input_data])
+df_input = df_input.reindex(columns=trained_feature_order)
 with right_col:
     st.header("📈 Prediction Output")
 
