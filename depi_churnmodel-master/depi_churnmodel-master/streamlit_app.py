@@ -3,13 +3,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import pickle
+from catboost import CatBoostClassifier
 
 st.set_page_config(layout="wide")
 
-# Load model
-with open("churn_model.pkl", "rb") as f:
-    model = pickle.load(f)
+# Load CatBoost model
+model = CatBoostClassifier()
+model.load_model("catboost_model.cbm")
     
 # Load dataset for visualizations
 data = pd.read_csv("cleaned_data.csv")
