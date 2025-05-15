@@ -75,18 +75,18 @@ with right_col:
         else:
             st.success(f"✅ Unlikely to Churn (Confidence: {1 - prob:.2%})")
 
-    # Monthly Charges KDE (alternative: Salary)
-    st.subheader("📊 Churned vs. Retained - Estimated Salary")
-    fig_kde, ax_kde = plt.subplots()
-    sns.kdeplot(data[data['Exited'] == 1]['EstimatedSalary'], label="Churned", shade=True, color="#ff7f0e", ax=ax_kde)
-    sns.kdeplot(data[data['Exited'] == 0]['EstimatedSalary'], label="Retained", shade=True, color="#1f77b4", ax=ax_kde)
-    ax_kde.set_xlabel("Estimated Salary")
-    ax_kde.set_ylabel("Density")
-    ax_kde.legend()
+    st.subheader("📊 Churned vs. Retained - Age")
+    fig_kde_age, ax_kde_age = plt.subplots()
+    sns.kdeplot(data[data['Exited'] == 1]['Age'], label="Churned", fill=True, color="#ff7f0e", ax=ax_kde_age)
+    sns.kdeplot(data[data['Exited'] == 0]['Age'], label="Retained", fill=True, color="#1f77b4", ax=ax_kde_age)
+    ax_kde_age.set_xlabel("Age")
+    ax_kde_age.set_ylabel("Density")
+    ax_kde_age.legend()
+    
 
     col1, col2 = st.columns(2)
     with col1:
-        st.pyplot(fig_kde)
+        st.pyplot(fig_kde_age)
 
     # Pie chart of churn rate
     churn_counts = data['Exited'].value_counts()
