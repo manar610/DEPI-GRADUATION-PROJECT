@@ -1,9 +1,9 @@
+import os
 import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
 from catboost import CatBoostClassifier
 
 st.set_page_config(layout="wide")
@@ -13,7 +13,8 @@ model_path = os.path.join(os.path.dirname(__file__), "catboost_model.cbm")
 model.load_model(model_path)
 
 # Load dataset for visualizations
-data = pd.read_csv("cleaned_data.csv")
+data_path = os.path.join(os.path.dirname(__file__), "cleaned_data.csv")
+data = pd.read_csv(data_path)
 
 st.title("Customer Churn Prediction")
 
