@@ -24,18 +24,17 @@ with left_col:
     st.header("🔧 Input Features")
     col1, col2 = st.columns(2)
     with col1:
-
-    credit_score = st.slider("Credit Score", 300, 850, 600)
-    geography = st.selectbox("Geography", ["France", "Germany", "Spain"])
-    gender = st.selectbox("Gender", ["Male", "Female"])
-    age = st.slider("Age", 18, 100, 30)
-    tenure = st.slider("Tenure (Years)", 0, 10, 3)
+        credit_score = st.slider("Credit Score", 300, 850, 600)
+        geography = st.selectbox("Geography", ["France", "Germany", "Spain"])
+        gender = st.selectbox("Gender", ["Male", "Female"])
+        age = st.slider("Age", 18, 100, 30)
+        tenure = st.slider("Tenure (Years)", 0, 10, 3)
     with col2:
-    balance = st.number_input("Balance", min_value=0.0, value=0.0)
-    num_of_products = st.slider("Number of Products", 1, 4, 1)
-    has_cr_card = st.selectbox("Has Credit Card?", ["Yes", "No"])
-    is_active_member = st.selectbox("Is Active Member?", ["Yes", "No"])
-    estimated_salary = st.number_input("Estimated Salary", min_value=0.0, value=50000.0)
+        balance = st.number_input("Balance", min_value=0.0, value=0.0)
+        num_of_products = st.slider("Number of Products", 1, 4, 1)
+        has_cr_card = st.selectbox("Has Credit Card?", ["Yes", "No"])
+        is_active_member = st.selectbox("Is Active Member?", ["Yes", "No"])
+        estimated_salary = st.number_input("Estimated Salary", min_value=0.0, value=50000.0)
 
 # Encode inputs to match training format
 input_data = {
