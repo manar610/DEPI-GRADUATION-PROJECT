@@ -36,7 +36,10 @@ with left_col:
         is_active_member = st.selectbox("Is Active Member?", ["Yes", "No"])
         estimated_salary = st.number_input("Estimated Salary", min_value=0.0, value=50000.0)
 
-# Encode inputs to match training format
+column_order = ['CreditScore', 'Age', 'Tenure', 'Balance', 'NumOfProducts', 
+                'HasCrCard', 'IsActiveMember', 'EstimatedSalary', 'Geography', 'Gender']
+
+# Create input dict with encoded values
 input_data = {
     "CreditScore": credit_score,
     "Geography": {"France": 0, "Germany": 1, "Spain": 2}[geography],
@@ -50,19 +53,18 @@ input_data = {
     "EstimatedSalary": estimated_salary
 }
 
-df_input = pd.DataFrame([input_data])
+# Create DataFrame and reorder columns
+df_input = pd.DataFrame([input_data])[column_order]
 
-with right_col:
-    st.header("📈 Prediction Output")
-
-    if st.button("Predict Churn"):
-        prediction = model.predict(df_input)[0]
-        prob = model.predict_proba(df_input)[0][1]
-        
-        if prediction == 1:
-            st.error(f"⚠️ Likely to Churn (Confidence: {prob:.2%})")
-        else:
-            st.success(f"✅ Unlikely to Churn (Confidence: {1 - prob:.2%})")
+# Predict
+if st.button("Predict Churn"):
+    prediction = model.predict(df_input)[0]
+    prob = model.predict_proba(df_input)[0][1]
+    
+    if prediction == 1:
+        st.error(f"⚠️ Likely to Churn (Confidence: {prob:.2%})")
+    else:
+        st.success(f"✅ Unlikely to Churn (Confidence: {1 - prob:.2%})")
 
     # Monthly Charges KDE (alternative: Salary)
     st.subheader("📊 Churned vs. Retained - Estimated Salary")
